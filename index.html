@@ -3,17 +3,13 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
-    function loadPaymentScript(isProd, sessionKey, payinConfigId) {
+    function loadPaymentScript(isProd) {
       const script = document.createElement('script');
       script.type = 'module';
       script.src = isProd 
         ? 'https://static.rainforestpay.com/payment.js'
         : 'https://static.rainforestpay.com/sandbox.payment.js';
-
-      script.onload = function() {
-        addPaymentElement(sessionKey, payinConfigId);
-      };
-      
+    
       document.head.appendChild(script);
       sendLogMessage('loadPaymentScript done. script.src ' + script.src);
     }
@@ -34,16 +30,6 @@
       document.body.appendChild(paymentElement);
 
       sendLogMessage('addPaymentElement done');
-    }
-
-    function initializePaymentForm(sessionKey, payinConfigId) {
-      const paymentElement = document.getElementById('pay-form');
-      if (sessionKey) {
-        paymentElement.setAttribute('session-key', sessionKey);
-      }
-      if (payinConfigId) {
-        paymentElement.setAttribute('payin-config-id', payinConfigId);
-      }
     }
   </script>
 </head>
