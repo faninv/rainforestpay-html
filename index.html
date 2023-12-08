@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const sessionKey = params.get('sessionKey');
+      const payinConfigId = params.get('payinConfigId');
+      const isProd = params.get('isProd') === 'true';
+
+      // Dynamically setting the script source based on isProd parameter
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = isProd 
+        ? 'https://static.rainforestpay.com/payment.js'
+        : 'https://static.rainforestpay.com/sandbox.payment.js';
+      document.head.appendChild(script);
+
+      const paymentElement = document.getElementById('pay-form');
+      if (sessionKey) {
+        paymentElement.setAttribute('session-key', sessionKey);
+      }
+      if (payinConfigId) {
+        paymentElement.setAttribute('payin-config-id', payinConfigId);
+      }
+    });
+  </script>
+</head>
+<body>
+  <rainforest-payment
+    id="pay-form"
+    session-key="REPLACE_ME"
+    payin-config-id="REPLACE_ME"
+    allowed-methods="CARD"
+    style-button-color="#212121"
+    style-button-border-radius="90rem"
+    style-font-family="'ProximaNova',sans-serif"
+  ></rainforest-payment>
+</body>
+</html>
+<!-- 
+  https://yourwebsite.com/yourpage.html?sessionKey=yourSessionKey&payinConfigId=yourConfigId&isProd=true
+ -->
