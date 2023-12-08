@@ -4,17 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
     var isProd;
-
-    function sendLogMessage(message) {
-      if (window.LogChannel) {
-        window.LogChannel.postMessage(message);
-      }
-    }
-
-    window.addEventListener('load', function() {
-      sendLogMessage('from JavaScript: Embeddable Page loaded.');
-    });
-
+    
     function loadPaymentScript() {
       const script = document.createElement('script');
       script.type = 'module';
@@ -23,13 +13,9 @@
         : 'https://static.rainforestpay.com/sandbox.payment.js';
 
       document.head.appendChild(script);
-      sendLogMessage('from JavaScript: loadPaymentScript done. script.src ' + script.src);
     }
 
     function addPaymentElement(sessionKey, payinConfigId) {
-      sendLogMessage('from JavaScript: initializePaymentForm sessionKey ' + sessionKey);
-      sendLogMessage('from JavaScript: initializePaymentForm payinConfigId ' + payinConfigId);
-
       const paymentElement = document.createElement('rainforest-payment');
       paymentElement.id = 'pay-form';
       paymentElement.setAttribute('session-key', sessionKey);
@@ -40,12 +26,9 @@
       paymentElement.setAttribute('style-font-family', "'ProximaNova',sans-serif");
 
       document.body.appendChild(paymentElement);
-
-      sendLogMessage('from JavaScript: addPaymentElement done');
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      sendLogMessage('from JavaScript: DOMContentLoaded done');
       const params = new URLSearchParams(window.location.search);
       isProd = params.get('isProd') === 'true';
 
