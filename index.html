@@ -3,7 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
-    function loadPaymentScript(isProd) {
+    function loadPaymentScript(isProd, sessionKey, payinConfigId) {
       const script = document.createElement('script');
       script.type = 'module';
       script.src = isProd 
