@@ -10,10 +10,13 @@
         ? 'https://static.rainforestpay.com/payment.js'
         : 'https://static.rainforestpay.com/sandbox.payment.js';
       document.head.appendChild(script);
+      sendLogMessage('loadPaymentScript script.src ' + script.src);
     }
 
     function initializePaymentForm(sessionKey, payinConfigId) {
       const paymentElement = document.getElementById('pay-form');
+      sendLogMessage('initializePaymentForm sessionKey ' + sessionKey);
+      sendLogMessage('initializePaymentForm payinConfigId ' + payinConfigId);
       if (sessionKey) {
         paymentElement.setAttribute('session-key', sessionKey);
       }
