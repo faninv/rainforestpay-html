@@ -23,12 +23,12 @@
         : 'https://static.rainforestpay.com/sandbox.payment.js';
 
       document.head.appendChild(script);
-      sendLogMessage('loadPaymentScript done. script.src ' + script.src);
+      sendLogMessage('from JavaScript: loadPaymentScript done. script.src ' + script.src);
     }
 
     function addPaymentElement(sessionKey, payinConfigId) {
-      sendLogMessage('initializePaymentForm sessionKey ' + sessionKey);
-      sendLogMessage('initializePaymentForm payinConfigId ' + payinConfigId);
+      sendLogMessage('from JavaScript: initializePaymentForm sessionKey ' + sessionKey);
+      sendLogMessage('from JavaScript: initializePaymentForm payinConfigId ' + payinConfigId);
 
       const paymentElement = document.createElement('rainforest-payment');
       paymentElement.id = 'pay-form';
@@ -41,11 +41,11 @@
 
       document.body.appendChild(paymentElement);
 
-      sendLogMessage('addPaymentElement done');
+      sendLogMessage('from JavaScript: addPaymentElement done');
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      sendLogMessage('DOMContentLoaded done');
+      sendLogMessage('from JavaScript: DOMContentLoaded done');
       const params = new URLSearchParams(window.location.search);
       isProd = params.get('isProd') === 'true';
 
@@ -53,7 +53,5 @@
     });
   </script>
 </head>
-<body>
-  <p>debug in html</p>
-</body>
+<body></body>
 </html>
