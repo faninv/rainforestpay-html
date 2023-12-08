@@ -9,14 +9,35 @@
       script.src = isProd 
         ? 'https://static.rainforestpay.com/payment.js'
         : 'https://static.rainforestpay.com/sandbox.payment.js';
+
+      script.onload = function() {
+        addPaymentElement(sessionKey, payinConfigId);
+      };
+      
       document.head.appendChild(script);
-      sendLogMessage('loadPaymentScript script.src ' + script.src);
+      sendLogMessage('loadPaymentScript done. script.src ' + script.src);
+    }
+
+    function addPaymentElement(sessionKey, payinConfigId) {
+      sendLogMessage('initializePaymentForm sessionKey ' + sessionKey);
+      sendLogMessage('initializePaymentForm payinConfigId ' + payinConfigId);
+
+      const paymentElement = document.createElement('rainforest-payment');
+      paymentElement.id = 'pay-form';
+      paymentElement.setAttribute('session-key', sessionKey);
+      paymentElement.setAttribute('payin-config-id', payinConfigId);
+      paymentElement.setAttribute('allowed-methods', 'CARD');
+      paymentElement.setAttribute('style-button-color', '#212121');
+      paymentElement.setAttribute('style-button-border-radius', '90rem');
+      paymentElement.setAttribute('style-font-family', "'ProximaNova',sans-serif");
+
+      document.body.appendChild(paymentElement);
+
+      sendLogMessage('addPaymentElement done');
     }
 
     function initializePaymentForm(sessionKey, payinConfigId) {
       const paymentElement = document.getElementById('pay-form');
-      sendLogMessage('initializePaymentForm sessionKey ' + sessionKey);
-      sendLogMessage('initializePaymentForm payinConfigId ' + payinConfigId);
       if (sessionKey) {
         paymentElement.setAttribute('session-key', sessionKey);
       }
@@ -27,14 +48,5 @@
   </script>
 </head>
 <body>
-  <rainforest-payment
-    id="pay-form"
-    session-key="REPLACE_ME"
-    payin-config-id="REPLACE_ME"
-    allowed-methods="CARD"
-    style-button-color="#212121"
-    style-button-border-radius="90rem"
-    style-font-family="'ProximaNova',sans-serif"
-  ></rainforest-payment>
 </body>
 </html>
