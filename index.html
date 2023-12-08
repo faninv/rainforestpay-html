@@ -11,7 +11,44 @@
         }
       }
 
-      window.addEventListener('load', function() {
+    function loadPaymentScript() {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = isProd 
+        ? 'https://static.rainforestpay.com/payment.js'
+        : 'https://static.rainforestpay.com/sandbox.payment.js';
+
+      document.head.appendChild(script);
+      sendLogMessage('loadPaymentScript done. script.src ' + script.src);
+    }
+
+    function addPaymentElement(sessionKey, payinConfigId) {
+      sendLogMessage('initializePaymentForm sessionKey ' + sessionKey);
+      sendLogMessage('initializePaymentForm payinConfigId ' + payinConfigId);
+
+      const paymentElement = document.createElement('rainforest-payment');
+      paymentElement.id = 'pay-form';
+      paymentElement.setAttribute('session-key', sessionKey);
+      paymentElement.setAttribute('payin-config-id', payinConfigId);
+      paymentElement.setAttribute('allowed-methods', 'CARD');
+      paymentElement.setAttribute('style-button-color', '#212121');
+      paymentElement.setAttribute('style-button-border-radius', '90rem');
+      paymentElement.setAttribute('style-font-family', "'ProximaNova',sans-serif");
+
+      document.body.appendChild(paymentElement);
+
+      sendLogMessage('addPaymentElement done');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      sendLogMessage('DOMContentLoaded done');
+      const params = new URLSearchParams(window.location.search);
+      isProd = params.get('isProd') === 'true';
+
+      loadPaymentScript();
+    });
+
+    window.addEventListener('load', function() {
         sendLogMessage('from JavaScript: Embeddable Page loaded.');
       });
 
@@ -81,43 +118,6 @@
         addEventListeners();
       });
       window.addEventListener('beforeunload', removeEventListeners);
-
-    function loadPaymentScript() {
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.src = isProd 
-        ? 'https://static.rainforestpay.com/payment.js'
-        : 'https://static.rainforestpay.com/sandbox.payment.js';
-
-      document.head.appendChild(script);
-      sendLogMessage('loadPaymentScript done. script.src ' + script.src);
-    }
-
-    function addPaymentElement(sessionKey, payinConfigId) {
-      sendLogMessage('initializePaymentForm sessionKey ' + sessionKey);
-      sendLogMessage('initializePaymentForm payinConfigId ' + payinConfigId);
-
-      const paymentElement = document.createElement('rainforest-payment');
-      paymentElement.id = 'pay-form';
-      paymentElement.setAttribute('session-key', sessionKey);
-      paymentElement.setAttribute('payin-config-id', payinConfigId);
-      paymentElement.setAttribute('allowed-methods', 'CARD');
-      paymentElement.setAttribute('style-button-color', '#212121');
-      paymentElement.setAttribute('style-button-border-radius', '90rem');
-      paymentElement.setAttribute('style-font-family', "'ProximaNova',sans-serif");
-
-      document.body.appendChild(paymentElement);
-
-      sendLogMessage('addPaymentElement done');
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      sendLogMessage('DOMContentLoaded done');
-      const params = new URLSearchParams(window.location.search);
-      isProd = params.get('isProd') === 'true';
-
-      loadPaymentScript();
-    });
   </script>
 </head>
 <body>
