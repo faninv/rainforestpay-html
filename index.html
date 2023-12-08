@@ -5,11 +5,11 @@
   <script>
     var isProd;
 
-    // function sendLogMessage(message) {
-    //   if (window.LogChannel) {
-    //     window.LogChannel.postMessage(message);
-    //   }
-    // }
+    function sendLogMessage(message) {
+      if (window.LogChannel) {
+        window.LogChannel.postMessage(message);
+      }
+    }
 
     function loadPaymentScript() {
       const script = document.createElement('script');
