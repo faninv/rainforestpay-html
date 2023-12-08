@@ -11,6 +11,10 @@
       }
     }
 
+    window.addEventListener('load', function() {
+      sendLogMessage('from JavaScript: Embeddable Page loaded.');
+    });
+
     function loadPaymentScript() {
       const script = document.createElement('script');
       script.type = 'module';
